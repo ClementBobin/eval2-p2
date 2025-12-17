@@ -4,21 +4,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
 
 @Serializable
-data class PaginationDto(
-    @SerialName("has_next_page")
-    val hasNextPage: Boolean,
-)
-
-@Serializable
-data class AnimeListResponseDto(
-    @SerialName("data")
-    val data: List<AnimeDto>,
-
-    @SerialName("pagination")
-    val pagination: PaginationDto
-)
-
-@Serializable
 data class AnimeDto(
     @SerialName("mal_id")
     val malId: Long,
@@ -46,19 +31,4 @@ data class AnimeDto(
 
     @SerialName("year")
     val year: Int? = null
-)
-
-@Serializable
-data class ImagesDto(
-    @SerialName("jpg")
-    val jpg: ImageUrlsDto,
-)
-
-@Serializable
-data class ImageUrlsDto(
-    @SerialName("image_url")
-    val imageUrl: String? = null,
-
-    @SerialName("large_image_url")
-    val largeImageUrl: String? = null
 )
