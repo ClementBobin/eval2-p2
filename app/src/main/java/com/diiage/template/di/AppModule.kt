@@ -48,5 +48,8 @@ val appModule = module {
     single<AnimeRepository> { AnimeRepositoryImpl(get()) }
 
     // Manager (singleton - sound effects)
-    single<SoundManager> { SoundManager(androidContext()) }
+    single<SoundManagerRepository> { SoundManager(androidContext()) }
+
+    // Manager (singleton - vibration/haptic feedback)
+    single<VibrationManagerRepository> { VibrationManager(androidContext()) }
 }
