@@ -8,7 +8,7 @@ import com.diiage.template.domain.model.SoundType
  * This interface provides methods to play, control, and manage sound effects
  * with proper resource management.
  */
-interface SoundManager {
+interface SoundManagerRepository {
 
     /**
      * Plays a sound effect.
@@ -22,10 +22,4 @@ interface SoundManager {
      * Stops currently playing sounds.
      */
     fun stopSounds()
-
-    /**
-     * Releases all sound resources.
-     * Should be called when the SoundManager is no longer needed.
-     */
-    fun release()
 }

@@ -7,7 +7,11 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 
+/**
+ * Custom Application class for initializing Koin dependency injection.
+ */
 class Application : Application() {
+    /** Initializes Koin with the application context and modules. */
     override fun onCreate() {
         super.onCreate()
 

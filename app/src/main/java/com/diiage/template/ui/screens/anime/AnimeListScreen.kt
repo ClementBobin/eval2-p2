@@ -5,12 +5,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,6 +26,7 @@ import com.diiage.template.ui.core.components.state.EmptySearchResult
 import com.diiage.template.ui.core.components.state.EmptyState
 import com.diiage.template.ui.core.components.state.ErrorState
 import com.diiage.template.ui.core.components.state.LoadingState
+import com.diiage.template.R
 
 /**
  * Anime List and Search screen displaying top anime with search functionality.
@@ -133,7 +133,7 @@ private fun AnimeContent(
                 modifier = Modifier.size(48.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Default.Refresh,
+                    painter = painterResource(id = R.drawable.ic_refresh),
                     contentDescription = "Reload list",
                     tint = MaterialTheme.colorScheme.primary
                 )

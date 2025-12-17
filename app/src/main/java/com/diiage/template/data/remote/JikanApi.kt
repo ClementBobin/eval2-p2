@@ -1,24 +1,42 @@
 package com.diiage.template.data.remote
 
+import com.diiage.template.data.dto.AnimeListResponseDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
-import io.ktor.http.HttpStatusCode
-import com.diiage.template.data.dto.WeatherResponseDto
+import io.ktor.client.request.parameter
 
-internal class WeatherApi(private val client: HttpClient) {
+/**
+ * Service class to interact with the Jikan API for fetching anime data.
+ *
+ * @property client The HTTP client used to make requests to the Jikan API.
+ */
+internal class JikanApi(private val client: HttpClient) {
+    /**
+     * Fetches the top anime list from the Jikan API.
+     *
+     * @param page The page number for pagination (default: 1)
+     * @return [AnimeListResponseDto] containing the list of top anime
+     */
+    suspend fun getTopAnime(page: Int = 1): AnimeListResponseDto {
+        return client.get("top/anime") {
+            parameter("page", page)
+            parameter("limit", 25)
+        }.body()
+    }
 
     /**
-     * Fetches the weather forecast for the specified city.
+     * Searches for anime by title query.
      *
-     * @param city The city to fetch the weather forecast for.
-     * @return [WeatherResponseDto] containing the weather forecast details.
-     * @throws HttpException if the request fails or if the status code is not [HttpStatusCode.OK].
+     * @param query The search query string
+     * @param page The page number for pagination (default: 1)
+     * @return [AnimeListResponseDto] containing the search results
      */
-    suspend fun getWeatherForecast(city: String): WeatherResponseDto = client.getWeatherForecast(city)
+    suspend fun searchAnime(query: String, page: Int = 1): AnimeListResponseDto {
+        return client.get("anime") {
+            parameter("q", query)
+            parameter("page", page)
+            parameter("limit", 25)
+        }.body()
+    }
 }
-
-private suspend fun HttpClient.getWeatherForecast(city: String): WeatherResponseDto =
-    get("weather/forecast/$city")
-        .accept(HttpStatusCode.OK)
-        .body()

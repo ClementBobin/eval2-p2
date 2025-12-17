@@ -3,15 +3,14 @@ package com.diiage.template.domain.model
 /**
  * Module de domaine représentant une prévision météo.
  */
-data class Weather(
-    val id: Long = 0,
-    val location: String,
-    val region: String,
-    val country: String,
-    val currentTemp: Double,
-    val condition: String,
-    val iconUrl: String,
-    val date: String,
-    val maxTemp: Double,
-    val minTemp: Double
+data class Anime(
+    val id: Long, // Maps to mal_id
+    val title: String,
+    val englishTitle: String?,
+    val imageUrl: String?, // Will map from images.jpg.image_url
+    val episodes: Int?,
+    val status: String?,
+    val score: Double?,
+    val type: String?,
+    val year: Int?
 )

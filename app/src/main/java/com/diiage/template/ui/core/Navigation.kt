@@ -12,8 +12,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.diiage.template.ui.screens.home.HomeScreen
-import com.diiage.template.ui.screens.login.LoginScreen
+import com.diiage.template.ui.screens.anime.AnimeScreen
 import com.diiage.template.ui.screens.splash.SplashScreen
 
 /**
@@ -36,14 +35,9 @@ sealed class Destination(val route: String, val arguments: List<NamedNavArgument
     object Splash : Destination(route = "splash")
 
     /**
-     * Home screen destination - the main screen after successful authentication.
+     * Home screen destination - the main screen of the application.
      */
     object Home : Destination(route = "home")
-
-    /**
-     * Login screen destination - authentication screen for user login.
-     */
-    object Login : Destination(route = "login")
 }
 
 /**
@@ -134,9 +128,7 @@ fun NavHost(
         startDestination = Destination.Splash.route,
         modifier = modifier
     ) {
-        // Authentication Flow
         composable(Destination.Splash) { SplashScreen(navController) }
-        composable(Destination.Home) { HomeScreen(navController) }
-        composable(Destination.Login) { LoginScreen(navController) }
+        composable(Destination.Home) { AnimeScreen(navController) }
     }
 }

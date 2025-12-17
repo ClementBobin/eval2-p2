@@ -17,6 +17,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.json.Json
 
 fun createHttpClient(
     baseUrl: String,
@@ -27,7 +28,11 @@ fun createHttpClient(
     }
 
     install(ContentNegotiation) {
-        json()
+        json(Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+            prettyPrint = true
+        })
     }
 
     install(HttpTimeout) {
@@ -49,8 +54,9 @@ fun createHttpClient(
         validateResponse { response ->
             println("Response status: ${response.status}")
             when (response.status.value) {
+                429 -> throw HttpException.RateLimitExceededException("Rate limit exceeded: ${response.status}")
                 in 400..499 -> throw HttpException.ClientError(response.status.value, "Client error: ${response.status}")
-                in 500..599 -> throw HttpException.ServerError(response.status.value, "Server error: ${response.status}")
+                in 500..599 -> throw HttpException.ServerError("Server error: ${response.status}")
             }
         }
     }
@@ -71,5 +77,15 @@ fun HttpResponse.accept(vararg codes: HttpStatusCode) = apply {
 sealed class HttpException(message: String) : Exception(message) {
     class NotAccepted(message: String) : HttpException(message)
     class ClientError(val statusCode: Int, message: String) : HttpException(message)
-    class ServerError(val statusCode: Int, message: String) : HttpException(message)
+    class ServerError(message: String) : HttpException(message)
+
+
+
+    /**
+     * Exception thrown when Jikan API rate limit is exceeded.
+     *
+     * Jikan API has a limit of 30 requests per minute and 3 requests per second.
+     * This exception is caught so it be display in the UI layer to show appropriate user feedback.
+     */
+    class RateLimitExceededException(message: String) : Exception(message)
 }

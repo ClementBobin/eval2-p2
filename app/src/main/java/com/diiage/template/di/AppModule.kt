@@ -1,13 +1,15 @@
 package com.diiage.template.di
 
-import com.diiage.template.data.remote.LoginAPI
+import com.diiage.template.data.manager.*
+import com.diiage.template.data.remote.*
 import com.diiage.template.data.repository.*
 import com.diiage.template.domain.repository.*
 import com.diiage.template.data.remote.createHttpClient
 import org.koin.dsl.module
 import io.ktor.client.HttpClient
+import org.koin.android.ext.koin.androidContext
 
-private const val RMAPI_URL = "http://98.66.234.231:8000/api/"
+private const val RMAPI_URL = "https://api.jikan.moe/v4/"
 
 /**
  * Koin dependency injection module for the application.
@@ -20,7 +22,7 @@ private const val RMAPI_URL = "http://98.66.234.231:8000/api/"
  * This module should be loaded when initializing the Koin container in the application.
  *
  * ## Dependencies Included
- * - [LoginRepository] as singleton using [LoginRepositoryImpl] implementation
+ * - [AnimeRepository] as singleton using [AnimeRepositoryImpl] implementation
  *
  * @see org.koin.dsl.module
  * @see single
@@ -33,18 +35,18 @@ private const val RMAPI_URL = "http://98.66.234.231:8000/api/"
  * }
  */
 val appModule = module {
+    // Single instance (singleton) of HttpClient configured for Jikan API
     single<HttpClient> {
         createHttpClient(
             baseUrl = RMAPI_URL
         )
     }
 
-    // Single instance (singleton) of LoginService
-    single { LoginAPI(get()) }
-    single<LoginRepository> { LoginRepositoryImpl(get()) }
+    // Single instance (singleton) of JikanService
+    // Data layer - Jikan API
+    single { JikanApi(get()) }
+    single<AnimeRepository> { AnimeRepositoryImpl(get()) }
 
-
-    // Add other dependencies here as needed
-    // single { YourRepository() }
-    // factory { YourUseCase() } // new instance each time
+    // Manager (singleton - sound effects)
+    single<SoundManager> { SoundManager(androidContext()) }
 }

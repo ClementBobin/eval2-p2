@@ -1,79 +1,89 @@
 package com.diiage.template.data.repository
 
-import com.diiage.template.data.remote.LoginAPI
-import com.diiage.template.domain.model.LoginResponse
+import com.diiage.template.data.remote.JikanApi
+import com.diiage.template.data.remote.HttpException
+
+import com.diiage.template.domain.model.Anime
+import com.diiage.template.data.dto.AnimeDto
 import com.diiage.template.domain.repository.AnimeRepository
-import kotlinx.coroutines.delay
-import kotlin.math.absoluteValue
-import kotlin.text.equals
 
 /**
- * Implementation of [AnimeRepository] that provides mock authentication functionality.
+ * Implementation of [AnimeRepository] using Jikan API as the data source.
  *
- * This repository simulates login operations with predefined responses for specific identifiers
- * and generates mock user IDs for other cases. Useful for testing and development purposes.
+ * This repository handles fetching top anime and searching for anime
+ * by title, mapping the data transfer objects (DTOs) from the Jikan API
+ * to the domain models used in the application.
  *
- * @constructor Creates a new instance of the login repository implementation.
+ * @property jikanApi The Jikan API service for making network requests.
  */
-internal class LoginRepositoryImpl(
-    private val loginAPI: LoginAPI
+internal class AnimeRepositoryImpl(
+    private val jikanApi: JikanApi
 ) : AnimeRepository {
 
     /**
-     * Attempts to authenticate a user with the provided identification.
+     * Fetches the top anime list from Jikan API.
      *
-     * This method simulates an API call with a 1-second delay and returns mock responses
-     * based on the identification string:
-     * - "admin" (case-insensitive): Returns successful login with userId "admin-123"
-     * - "user" (case-insensitive): Returns successful login with userId "user-456"
-     * - "error" (case-insensitive): Returns failed login with "Invalid credentials" error
-     * - Any other identifier: Returns successful login with generated userId based on hash code
+     * Maps [AnimeDto] objects to domain [Anime] models with proper
+     * error handling for network and API-specific errors.
      *
-     * @param identification The user's identification string (username, email, etc.)
-     * @return [LoginResponse] containing authentication result with success status,
-     *         user ID for successful logins, or error message for failed attempts
-     *
-     * @sample
-     * // Successful login for admin
-     * val response = loginRepository.login("admin")
-     * // response.success == true, response.userId == "admin-123"
-     *
-     * @sample
-     * // Failed login simulation
-     * val response = loginRepository.login("error")
-     * // response.success == false, response.error == "Invalid credentials"
+     * @param page The page number for pagination
+     * @return List of [Anime] objects or empty list on error
+     * @throws HttpException for network-related errors
      */
-    override suspend fun login(identification: String): LoginResponse {
-        // Simulate API call delay
-        delay(1000)
+    override suspend fun getTopAnime(page: Int): List<Anime> {
+        return try {
+            val response = jikanApi.getTopAnime(page)
+            response.data.map { dto ->
+                Anime(
+                    id = dto.malId,
+                    title = dto.title,
+                    englishTitle = dto.titleEnglish,
+                    imageUrl = dto.images.jpg.largeImageUrl ?: dto.images.jpg.imageUrl,
+                    episodes = dto.episodes,
+                    status = dto.status,
+                    score = dto.score,
+                    type = dto.type,
+                    year = dto.year
+                )
+            }
+        } catch (e: Exception) {
+            throw e
+        }
+    }
 
-        // Mock authentication logic
-        return when {
-            identification.equals("admin", ignoreCase = true) -> {
-                LoginResponse(
-                    success = true,
-                    userId = "admin-123"
+    /**
+     * Searches for anime by title query.
+     *
+     * Uses the Jikan search endpoint and maps results to domain models.
+     * Includes Jikan API-specific error handling.
+     *
+     * @param query The search query string
+     * @param page The page number for pagination
+     * @return List of [Anime] objects matching the search or empty list
+     * @throws HttpException for network-related errors
+     */
+    override suspend fun searchAnime(query: String, page: Int): List<Anime> {
+        if (query.isBlank()) {
+            return emptyList()
+        }
+
+        return try {
+            val response = jikanApi.searchAnime(query, page)
+            response.data.map { dto ->
+                Anime(
+                    id = dto.malId,
+                    title = dto.title,
+                    englishTitle = dto.titleEnglish,
+                    imageUrl = dto.images.jpg.largeImageUrl ?: dto.images.jpg.imageUrl,
+                    episodes = dto.episodes,
+                    status = dto.status,
+                    score = dto.score,
+                    type = dto.type,
+                    year = dto.year
                 )
             }
-            identification.equals("user", ignoreCase = true) -> {
-                LoginResponse(
-                    success = true,
-                    userId = "user-456"
-                )
-            }
-            identification.equals("error", ignoreCase = true) -> {
-                LoginResponse(
-                    success = false,
-                    error = "Invalid credentials"
-                )
-            }
-            else -> {
-                // For any other identifier, simulate successful login
-                LoginResponse(
-                    success = true,
-                    userId = "user-${identification.hashCode().absoluteValue}"
-                )
-            }
+        } catch (e: Exception) {
+            throw e
         }
     }
 }

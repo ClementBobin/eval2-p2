@@ -15,6 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 
+/**
+ * Composable Search Bar with a leading search icon and customizable placeholder.
+ *
+ * @param value The current text to be displayed in the search bar.
+ * @param onValueChange Callback function to be invoked when the text changes.
+ * @param placeholder Placeholder text to be displayed when the search bar is empty.
+ * @param modifier Modifier to be applied to the search bar.
+ */
 @Composable
 fun SearchBar(
     value: TextFieldValue,

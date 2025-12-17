@@ -116,50 +116,6 @@ open class ViewModel<State>(initialState: State, application: Application): Andr
     }
 
     /**
-     * Collects data from a flow and handles the results on the appropriate dispatchers.
-     *
-     * This method automatically handles the coroutine context switching:
-     * - Collection happens on IO dispatcher for background work
-     * - Results are delivered on Main dispatcher for UI updates
-     * - Errors are caught and delivered as [Result.failure]
-     *
-     * @param T The type of data being collected
-     * @param source A suspending function that returns a flow to collect from
-     * @param onResult A callback function that receives the result of the collection
-     *
-     * @sample
-     * // Collect data example:
-     * collectData(
-     *     source = { repository.getLiveData() },
-     *     onResult = { result ->
-     *         result.onSuccess { data ->
-     *             updateState { copy(items = data) }
-     *         }.onFailure { error ->
-     *             sendEvent(ErrorEvent("Failed to load data: ${error.message}"))
-     *         }
-     *     }
-     * )
-     */
-    fun <T> collectData(
-        source: suspend () -> Flow<T>,
-        onResult: Result<T>.() -> Unit
-    ) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                source().collect { newValue ->
-                    launch(Dispatchers.Main) {
-                        onResult(Result.success(newValue))
-                    }
-                }
-            } catch (ex: Throwable) {
-                launch(Dispatchers.Main) {
-                    onResult(Result.failure(ex))
-                }
-            }
-        }
-    }
-
-    /**
      * Fetches data from a suspending function and handles the results on the appropriate dispatchers.
      *
      * This method automatically handles the coroutine context switching:

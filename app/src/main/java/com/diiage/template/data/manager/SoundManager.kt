@@ -9,10 +9,22 @@ import com.diiage.template.domain.model.SoundType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+/**
+ * Implementation of SoundManagerRepository for Android using MediaPlayer.
+ * Handles playing and stopping system sounds.
+ *
+ * @param context The application context.
+ */
 class SoundManager(private val context: Context) : SoundManagerRepository {
 
     private var mediaPlayer: MediaPlayer? = null
 
+    /**
+     * Plays a system sound based on the provided SoundType and volume.
+     *
+     * @param soundType The type of sound to play.
+     * @param volume The volume level (0.0 to 1.0).
+     */
     override suspend fun playSound(soundType: SoundType, volume: Float) {
         val soundUri = getSystemSoundUri(soundType) ?: run {
             println("No system sound URI found for: $soundType")
@@ -66,6 +78,9 @@ class SoundManager(private val context: Context) : SoundManagerRepository {
         }
     }
 
+    /**
+     * Stops any currently playing sound.
+     */
     override fun stopSounds() {
         mediaPlayer?.let {
             try {
@@ -87,6 +102,9 @@ class SoundManager(private val context: Context) : SoundManagerRepository {
     /**
      * Gets the Android system URI for a given sound type.
      * Uses RingtoneManager for reliable URI retrieval.
+     *
+     * @param soundType The type of sound.
+     * @return The URI of the system sound, or null if not found.
      */
     private fun getSystemSoundUri(soundType: SoundType): Uri? {
         return try {
