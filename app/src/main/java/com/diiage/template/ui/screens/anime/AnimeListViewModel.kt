@@ -3,10 +3,10 @@ package com.diiage.template.ui.screens.anime
 import android.app.Application
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
-import com.diiage.template.data.manager.SoundManager
+import com.diiage.template.domain.repository.*
 import com.diiage.template.domain.model.Anime
 import com.diiage.template.domain.model.SoundType
-import com.diiage.template.domain.repository.AnimeRepository
+import com.diiage.template.domain.model.VibrationType
 import com.diiage.template.ui.core.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -50,7 +50,8 @@ class AnimeViewModel(
     application = application
 ) {
     private val animeRepository: AnimeRepository by inject()
-    private val soundManager: SoundManager by inject()
+    private val soundManager: SoundManagerRepository by inject()
+    private val vibrationManager : VibrationManagerRepository by inject()
     private val _uiState = MutableStateFlow(AnimeContracts.UiState())
     val uiState: StateFlow<AnimeContracts.UiState> = _uiState.asStateFlow()
 
@@ -87,7 +88,7 @@ class AnimeViewModel(
                     )
                 }
 
-                playSoundAsync(SoundType.Success)
+                playSoundAsync(SoundType.Success, VibrationType.Success)
             }
             onFailure { error ->
                 updateState {
@@ -98,7 +99,7 @@ class AnimeViewModel(
                     )
                 }
 
-                playSoundAsync(SoundType.Error)
+                playSoundAsync(SoundType.Error, VibrationType.Error)
             }
         }
     }
@@ -124,7 +125,7 @@ class AnimeViewModel(
                     )
                 }
 
-                playSoundAsync(SoundType.Success)
+                playSoundAsync(SoundType.Success, VibrationType.Success)
             }
             onFailure { error ->
                 updateState {
@@ -135,7 +136,7 @@ class AnimeViewModel(
                     )
                 }
 
-                playSoundAsync(SoundType.Error)
+                playSoundAsync(SoundType.Error, VibrationType.Error)
             }
         }
     }
@@ -146,9 +147,10 @@ class AnimeViewModel(
      *
      * @param soundType The type of sound to play.
      */
-    private fun playSoundAsync(soundType: SoundType) {
+    private fun playSoundAsync(soundType: SoundType, vibrationType: VibrationType = VibrationType.Click) {
         viewModelScope.launch {
             soundManager.playSound(soundType)
+            vibrationManager.vibrate(vibrationType)
         }
     }
 
