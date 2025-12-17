@@ -2,13 +2,13 @@ package com.diiage.template.data.repository
 
 import com.diiage.template.data.remote.LoginAPI
 import com.diiage.template.domain.model.LoginResponse
-import com.diiage.template.domain.repository.LoginRepository
+import com.diiage.template.domain.repository.AnimeRepository
 import kotlinx.coroutines.delay
 import kotlin.math.absoluteValue
 import kotlin.text.equals
 
 /**
- * Implementation of [LoginRepository] that provides mock authentication functionality.
+ * Implementation of [AnimeRepository] that provides mock authentication functionality.
  *
  * This repository simulates login operations with predefined responses for specific identifiers
  * and generates mock user IDs for other cases. Useful for testing and development purposes.
@@ -17,7 +17,7 @@ import kotlin.text.equals
  */
 internal class LoginRepositoryImpl(
     private val loginAPI: LoginAPI
-) : LoginRepository {
+) : AnimeRepository {
 
     /**
      * Attempts to authenticate a user with the provided identification.
