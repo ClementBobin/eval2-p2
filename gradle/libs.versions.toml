@@ -14,6 +14,12 @@ koin = "3.5.0"
 # Ktor Client
 ktor = "2.3.7"
 kotlinxSerialization = "1.6.0"
+# Image Loading Library
+coil = "2.5.0"
+# UI Text Library
+uiText = "1.5.0"
+# Material3 Library
+material = "1.11.0"
 
 
 [libraries]
@@ -48,6 +54,14 @@ ktor-client-logging = { group = "io.ktor", name = "ktor-client-logging", version
 
 # Kotlinx Serialization
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+
+# Coil for image loading
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+
+# Material3 Text Library
+android-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+androidx-compose-ui-text = { group = "androidx.compose.ui", name = "ui-text", version.ref = "uiText" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

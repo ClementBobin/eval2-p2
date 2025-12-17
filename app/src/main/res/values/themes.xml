@@ -1,5 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Template" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary Colors -->
+        <item name="colorPrimary">@color/blue_diiage</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/blue_200</item>
+        <item name="colorOnPrimaryContainer">@color/blue_900</item>
 
-    <style name="Theme.Template" parent="android:Theme.Material.Light.NoActionBar" />
+        <!-- Secondary Colors -->
+        <item name="colorSecondary">@color/yellow_diiage</item>
+        <item name="colorOnSecondary">@color/neutral_1000</item>
+        <item name="colorSecondaryContainer">@color/yellow_200</item>
+        <item name="colorOnSecondaryContainer">@color/yellow_900</item>
+
+        <!-- Tertiary Colors -->
+        <item name="colorTertiary">@color/sky_diiage</item>
+        <item name="colorOnTertiary">@color/neutral_1000</item>
+        <item name="colorTertiaryContainer">@color/sky_200</item>
+        <item name="colorOnTertiaryContainer">@color/sky_900</item>
+
+        <!-- Background Colors -->
+        <item name="android:colorBackground">@color/neutral_0</item>
+        <item name="colorOnBackground">@color/neutral_1000</item>
+
+        <!-- Surface Colors -->
+        <item name="colorSurface">@color/neutral_100</item>
+        <item name="colorOnSurface">@color/neutral_1000</item>
+        <item name="colorSurfaceVariant">@color/neutral_400</item>
+        <item name="colorOnSurfaceVariant">@color/neutral_800</item>
+
+        <!-- Outline Colors -->
+        <item name="colorOutline">@color/neutral_400</item>
+        <item name="colorOutlineVariant">@color/neutral_300</item>
+
+        <!-- Error Colors -->
+        <item name="android:colorError">@color/error</item>
+        <item name="colorOnError">@color/on_error</item>
+        <item name="colorErrorContainer">@color/error_container</item>
+        <item name="colorOnErrorContainer">@color/on_error_container</item>
+
+        <!-- Status Bar -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/blue_diiage</item>
+        <item name="android:navigationBarColor">@color/neutral_0</item>
+
+        <!-- Window Background -->
+        <item name="android:windowBackground">@color/neutral_0</item>
+    </style>
 </resources>

@@ -1,52 +1,45 @@
 package com.diiage.template.ui.core.components.layout
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 
+/**
+ * Main scaffold composable that provides a consistent layout with a top app bar.
+ *
+ * @param navController Navigation controller for handling navigation actions.
+ * @param title Title to be displayed in the top app bar.
+ * @param content Composable content to be displayed within the scaffold.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScaffold(
     navController: NavController,
+    title: String = "Anime Explorer",
     content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(
-        content = { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-            ) {
-                content(innerPadding)
-            }
-        }
-    )
-}
-
-// Preview function for MainScaffold
-@Composable
-fun MainScaffoldPreviewContent() {
-    val mockNavController = rememberNavController()
-
-    MainScaffold(navController = mockNavController) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Contenu de l'écran",
-                style = MaterialTheme.typography.headlineMedium
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = { Text(text = title) },
+                navigationIcon = {
+                    if (navController.previousBackStackEntry != null) {
+                        IconButton(onClick = { navController.navigateUp() }) {
+                            Icon(
+                                imageVector = androidx.compose.material.icons.Icons.Default.ArrowBack,
+                                contentDescription = "Back"
+                            )
+                        }
+                    }
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                )
             )
-        }
-    }
+        },
+        content = content
+    )
 }

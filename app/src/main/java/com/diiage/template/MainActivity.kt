@@ -13,7 +13,11 @@ import androidx.navigation.compose.rememberNavController
 import com.diiage.template.ui.core.NavHost
 import com.diiage.template.ui.core.theme.AppTheme
 
+/**
+ * Main activity of the application.
+ */
 class MainActivity : ComponentActivity() {
+    /** Called when the activity is starting. */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -25,6 +29,9 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/**
+ * Composable function that sets up the main application UI.
+ */
 @Composable
 fun App() {
     val navController = rememberNavController()

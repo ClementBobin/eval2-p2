@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- 🎨 Default Material Colors -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -7,4 +8,77 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- ⚪ Neutral / Grayscale Palette (White → Dark) -->
+    <color name="neutral_0">#FFFFFFFF</color>
+    <color name="neutral_100">#FFFAFAFA</color>
+    <color name="neutral_200">#FFF5F5F5</color>
+    <color name="neutral_300">#FFEEEEEE</color>
+    <color name="neutral_400">#FFE0E0E0</color>
+    <color name="neutral_500">#FFBDBDBD</color>
+    <color name="neutral_600">#FF9E9E9E</color>
+    <color name="neutral_700">#FF757575</color>
+    <color name="neutral_800">#FF616161</color>
+    <color name="neutral_900">#FF424242</color>
+    <color name="neutral_1000">#FF212121</color>
+    <color name="neutral_full">#FF000000</color>
+
+    <!-- 🌕 Yellow Palette (Base: #FFC100) -->
+    <color name="yellow_0">#FFFFF8E1</color>
+    <color name="yellow_100">#FFFFECB3</color>
+    <color name="yellow_200">#FFFFE082</color>
+    <color name="yellow_300">#FFFFD54F</color>
+    <color name="yellow_400">#FFFFCA28</color>
+    <color name="yellow_500">#FFFFC100</color>
+    <color name="yellow_600">#FFFFB300</color>
+    <color name="yellow_700">#FFFFA000</color>
+    <color name="yellow_800">#FFFF8F00</color>
+    <color name="yellow_900">#FFFF6F00</color>
+    <color name="yellow_1000">#FFFF5722</color>
+    <color name="yellow_diiage">#FFFFC100</color>
+
+    <!-- 🌊 Blue Palette (Base: #17375D) -->
+    <color name="blue_0">#FFE3F2FD</color>
+    <color name="blue_100">#FFBBDEFB</color>
+    <color name="blue_200">#FF90CAF9</color>
+    <color name="blue_300">#FF64B5F6</color>
+    <color name="blue_400">#FF42A5F5</color>
+    <color name="blue_500">#FF17375D</color>
+    <color name="blue_600">#FF1565C0</color>
+    <color name="blue_700">#FF0D47A1</color>
+    <color name="blue_800">#FF0B3C8A</color>
+    <color name="blue_900">#FF092F6B</color>
+    <color name="blue_1000">#FF061F4A</color>
+    <color name="blue_diiage">#FF17375D</color>
+
+    <!-- ☁️ Sky Palette (Base: #9ACBFD) -->
+    <color name="sky_0">#FFE3F2FD</color>
+    <color name="sky_100">#FFBBDEFB</color>
+    <color name="sky_200">#FF9ACBFD</color>
+    <color name="sky_300">#FF82B7FA</color>
+    <color name="sky_400">#FF6BA4F8</color>
+    <color name="sky_500">#FF5592F5</color>
+    <color name="sky_600">#FF3E7FF2</color>
+    <color name="sky_700">#FF286CEE</color>
+    <color name="sky_800">#FF135AE9</color>
+    <color name="sky_900">#FF0049E5</color>
+    <color name="sky_1000">#FF0038B5</color>
+    <color name="sky_diiage">#FF9ACBFD</color>
+
+    <!-- Difficulty Colors -->
+    <color name="facile">#FF4CAF50</color> <!-- Green -->
+    <color name="moyen">#FFFFC107</color> <!-- Amber -->
+    <color name="difficile">#FFF44336</color> <!-- Red -->
+
+    <!-- Error Colors -->
+    <color name="error">#FFBA1A1A</color>
+    <color name="on_error">#FFFFFFFF</color>
+    <color name="error_container">#FFFFDAD6</color>
+    <color name="on_error_container">#FF410002</color>
+
+    <!-- Dark Theme Error Colors -->
+    <color name="error_dark">#FFFFB4AB</color>
+    <color name="on_error_dark">#FF690005</color>
+    <color name="error_container_dark">#FF93000A</color>
+    <color name="on_error_container_dark">#FFFFDAD6</color>
 </resources>
